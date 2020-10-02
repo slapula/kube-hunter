@@ -1,4 +1,4 @@
-FROM python:3.8-alpine as builder
+FROM arm64v8/python:3.8-alpine as builder
 
 RUN apk add --no-cache \
     linux-headers \
@@ -16,7 +16,7 @@ RUN make deps
 COPY . .
 RUN make install
 
-FROM python:3.8-alpine
+FROM arm64v8/python:3.8-alpine
 
 RUN apk add --no-cache \
     tcpdump \
