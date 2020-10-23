@@ -1,9 +1,9 @@
 FROM arm64v8/python:3.8 as builder
 
 RUN apt update && apt install -y \
-    linux-headers \
+    linux-headers-$(uname -r) \
     tcpdump \
-    build-base \
+    build-essential \
     ebtables \
     make \
     git
