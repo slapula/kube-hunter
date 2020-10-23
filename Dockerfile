@@ -1,13 +1,12 @@
 FROM arm64v8/python:3.8 as builder
 
-RUN apk add --no-cache \
+RUN apt update && apt install -y \
     linux-headers \
     tcpdump \
     build-base \
     ebtables \
     make \
-    git && \
-    apk upgrade --no-cache
+    git
 
 WORKDIR /kube-hunter
 COPY setup.py setup.cfg Makefile ./
@@ -18,10 +17,9 @@ RUN make install
 
 FROM arm64v8/python:3.8
 
-RUN apk add --no-cache \
+RUN apt update && apt install -y \
     tcpdump \
-    ebtables && \
-    apk upgrade --no-cache
+    ebtables
 
 COPY --from=builder /usr/local/lib/python3.8/site-packages /usr/local/lib/python3.8/site-packages
 COPY --from=builder /usr/local/bin/kube-hunter /usr/local/bin/kube-hunter
